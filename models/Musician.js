@@ -20,6 +20,8 @@ genre:DataTypes.STRING
 )
 
 
+
+
 module.exports = {
     Musician
 };
