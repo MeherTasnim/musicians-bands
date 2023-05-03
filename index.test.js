@@ -1,4 +1,4 @@
-const { sequelize } = require('./db');
+const { sequelize, db } = require('./db');
 const { Band, Musician, Song } = require('./index')
 
 describe('Band, Musician, and Song Models', () => {
@@ -9,18 +9,28 @@ describe('Band, Musician, and Song Models', () => {
         // the 'sync' method will create tables based on the model class
         // by setting 'force:true' the tables are recreated each time the 
         // test suite is run
-        await sequelize.sync({ force: true });
+        await db.sync({ force: true });
     })
 
     test('can create a Band', async () => {
         // TODO - test creating a band
-        expect('NO TEST').toBe('EXPECTED VALUE HERE');
-    })
+        const testBand = await Band.create({
+            name: 'Backstreet boys',
+            genre: 'Pop'
+        });
+          
+        expect(testBand.name).toBe('Backstreet boys');
+    });
 
     test('can create a Musician', async () => {
         // TODO - test creating a musician
-        expect('NO TEST').toBe('EXPECTED VALUE HERE');
-    })
+        const testMusician = await Musician.create({
+            name: 'Justin Timberlake',
+            genre: 'Pop'
+
+        });
+        expect(testMusician.name).toBe('Justin Timberlake');
+    });
 
     test('can update a Band', async () => {
         // TODO - test updating a band
@@ -29,7 +39,11 @@ describe('Band, Musician, and Song Models', () => {
 
     test('can update a Musician', async () => {
         // TODO - test updating a musician
-        expect('NO TEST').toBe('EXPECTED VALUE HERE');
+        let updatedMusician = await Musician.findByPk(1);
+        const newMusician =await updatedMusician.update({
+            name: 'Britney Spears'
+        });
+        expect(newMusician.name).toBe('Oops I did it again');
     })
 
     test('can delete a Band', async () => {
@@ -39,6 +53,7 @@ describe('Band, Musician, and Song Models', () => {
 
     test('can delete a Musician', async () => {
         // TODO - test deleting a musician
-        expect('NO TEST').toBe('EXPECTED VALUE HERE');
+        let deleteMusician = await Musician.destroy({ where: {name: 'Justine Timberlake'}});
+        expect(deleteMusician).toBe({});
     })
 })
