@@ -19,8 +19,12 @@ genre:DataTypes.STRING
 
 )
 
+  {
+    sequelize: db, 
+    modelName: "Musician"
+  }
 
-
+)
 
 module.exports = {
     Musician

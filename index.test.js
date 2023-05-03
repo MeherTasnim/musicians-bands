@@ -23,8 +23,13 @@ describe('Band, Musician, and Song Models', () => {
 
     test('can create a Musician', async () => {
         // TODO - test creating a musician
-        expect('NO TEST').toBe('EXPECTED VALUE HERE');
-    })
+        const testMusician = await Musician.create({
+            name: 'Justin Timberlake',
+            genre: 'Pop'
+
+        });
+        expect(testMusician.name).toBe('Justin Timberlake');
+    });
 
     test('can update a Band', async () => {
         // TODO - test updating a band
@@ -37,7 +42,11 @@ describe('Band, Musician, and Song Models', () => {
 
     test('can update a Musician', async () => {
         // TODO - test updating a musician
-        expect('NO TEST').toBe('EXPECTED VALUE HERE');
+        let updatedMusician = await Musician.findByPk(1);
+        const newMusician =await updatedMusician.update({
+            name: 'Britney Spears'
+        });
+        expect(newMusician.name).toBe('Oops I did it again');
     })
 
     test('can delete a Band', async () => {
@@ -50,6 +59,7 @@ describe('Band, Musician, and Song Models', () => {
 
     test('can delete a Musician', async () => {
         // TODO - test deleting a musician
-        expect('NO TEST').toBe('EXPECTED VALUE HERE');
+        let deleteMusician = await Musician.destroy({ where: {name: 'Justine Timberlake'}});
+        expect(deleteMusician).toBe({});
     })
 })
