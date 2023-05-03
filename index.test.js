@@ -18,7 +18,6 @@ describe('Band, Musician, and Song Models', () => {
             name: 'Backstreet boys',
             genre: 'Pop'
         });
-          
         expect(testBand.name).toBe('Backstreet boys');
     });
 
@@ -34,8 +33,12 @@ describe('Band, Musician, and Song Models', () => {
 
     test('can update a Band', async () => {
         // TODO - test updating a band
-        expect('NO TEST').toBe('EXPECTED VALUE HERE');
-    })
+        let updatedBand = await Band.findByPk(1);
+        const newBand = await updatedBand.update({
+            name: 'Spice Girls'
+        });
+        expect(newBand.name).toBe('Spice Girls');
+    });
 
     test('can update a Musician', async () => {
         // TODO - test updating a musician
@@ -48,8 +51,11 @@ describe('Band, Musician, and Song Models', () => {
 
     test('can delete a Band', async () => {
         // TODO - test deleting a band
-        expect('NO TEST').toBe('EXPECTED VALUE HERE');
-    })
+        let findBand = await Band.findByPk(1);
+        let deleteBand = await findBand.destroy();
+        let emptyBand = await Band.findByPk(1);
+        expect(emptyBand).toBe(null);
+    });
 
     test('can delete a Musician', async () => {
         // TODO - test deleting a musician
