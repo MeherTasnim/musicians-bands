@@ -106,4 +106,52 @@ describe("Band, Musician, and Song Models", () => {
 		);
 		expect(findDeleted).toBe(null);
 	});
+
+
+    test("can associate with band and musicians models", async () => {
+		// TODO - test creating a band
+		 await Band.bulkCreate([
+            {
+              name: "Backstreet boys",
+              genre: "pop",
+            },
+            {
+              name: "Britney Spears",
+              genre: "pop",
+            },
+              {
+                name: "N'sync",
+                genre: "pop",
+            }
+          ])
+        
+          await Musician.bulkCreate([
+            {
+              name: "Brian B",
+              instrument: "microphone",
+            },
+            {
+              name: "Aj",
+              instrument: "guitar",
+            },
+              {
+                name: "Joey",
+             instrument: "drums",
+            }
+          ])
+          const bands = await Band.findAll()
+          const musicians = await Musician.findAll()
+          const band = bands[0]
+          const musician = musicians[0]
+          await band.addMusician(musician)
+
+
+        const bandWithMusicians = await Band.findByPk(2,{include: Musician})
+        
+        expect(bandWithMusicians.Musicians[0]).toHaveProperty("name", "Brian B")
+       
+        
+    
+         /* find the band first then include the musicians. */ 
+	});
 });

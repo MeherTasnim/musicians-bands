@@ -7,7 +7,7 @@ Musician.init(
 
     {
         name: DataTypes.STRING,
-        genre: DataTypes.STRING
+        instrument: DataTypes.STRING
 
     },
     {
