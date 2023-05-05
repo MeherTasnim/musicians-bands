@@ -106,4 +106,43 @@ describe("Band, Musician, and Song Models", () => {
 		);
 		expect(findDeleted).toBe(null);
 	});
+
+	test("Associate Song and Band", async () => {
+		await Song.create(
+			{
+				title: "I Want It That Way",
+				year: 1999,
+				length: 3,
+			}
+		)
+		await Band.create(
+			{
+				name: "Backstreet Boys",
+				genre: "Pop",
+			}
+		)
+
+		const song = await Song.findOne(
+			{ where: { title: "I Want It That Way" } }
+		);
+		const band = await Band.findOne(
+			{ where: { name: "Backstreet Boys" } }
+		);
+
+		await song.addBand(band);
+		// await band.getSongs();
+
+		const testAssociateSong = await Song.findOne(
+			{ where: { title: "I Want It That Way" }, include: Band }
+		)
+		const testAssociateBand = await Band.findOne(
+			{ where: { name: "Backstreet Boys" }, include: Song }
+		)
+
+		console.log(testAssociateBand.toJSON());
+		console.log(testAssociateSong.toJSON());
+
+		expect(testAssociateBand.toJSON().Songs).toEqual(testAssociateSong.toJSON().Bands);
+
+	})
 });
